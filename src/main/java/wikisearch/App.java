@@ -13,6 +13,7 @@ public class App {
     private final ResultPrinter printer = new ResultPrinter(System.out);
     private final WikipediaClient client = new WikipediaClient();
     private final SearchResponseParser parser = new SearchResponseParser();
+    private final ArticleOpener opener = new ArticleOpener(System.out);
 
     public void run() {
         while (true) {
@@ -42,8 +43,7 @@ public class App {
             if (choice.get() == 0) {
                 continue;
             }
-            SearchResult selected = results.get(choice.get() - 1);
-            System.out.println("Выбрана статья: " + selected.title() + " -> " + selected.url()); // временно: этап 5
+            opener.open(results.get(choice.get() - 1));
         }
         System.out.println();
         System.out.println("До свидания!");
