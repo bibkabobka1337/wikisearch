@@ -9,6 +9,9 @@ import java.util.Scanner;
  */
 public class ConsoleInput {
 
+    /** Команда выхода из программы. */
+    public static final String EXIT_COMMAND = "/exit";
+
     private final Scanner scanner;
     private final PrintStream out;
 
@@ -20,15 +23,18 @@ public class ConsoleInput {
     /**
      * Запрашивает поисковый запрос, пока пользователь не введёт непустую строку.
      *
-     * @return запрос или {@link Optional#empty()}, если ввод закончился (Ctrl+D / Ctrl+Z)
+     * @return запрос или {@link Optional#empty()}, если пользователь ввёл команду выхода или ввод закончился (Ctrl+D / Ctrl+Z)
      */
     public Optional<String> readQuery() {
         while (true) {
-            out.print("Введите поисковый запрос (пустая строка - повторить, Ctrl+D - выход): ");
+            out.print("Введите поисковый запрос (" + EXIT_COMMAND + " - выход): ");
             if (!scanner.hasNextLine()) {
                 return Optional.empty();
             }
             String line = scanner.nextLine().trim();
+            if (line.equalsIgnoreCase(EXIT_COMMAND)) {
+                return Optional.empty();
+            }
             if (!line.isEmpty()) {
                 return Optional.of(line);
             }
@@ -41,15 +47,18 @@ public class ConsoleInput {
      *
      * @param max количество статей в списке
      * @return номер статьи от 1 до {@code max}; {@code 0} - новый поиск;
-     *         {@link Optional#empty()}, если ввод закончился
+     *         {@link Optional#empty()}, если выбран выход или ввод закончился
      */
     public Optional<Integer> readChoice(int max) {
         while (true) {
-            out.print("Введите номер статьи (1-" + max + ") или 0 для нового поиска: ");
+            out.print("Введите номер статьи (1-" + max + "), 0 - новый поиск, " + EXIT_COMMAND + " - выход: ");
             if (!scanner.hasNextLine()) {
                 return Optional.empty();
             }
             String line = scanner.nextLine().trim();
+            if (line.equalsIgnoreCase(EXIT_COMMAND)) {
+                return Optional.empty();
+            }
             try {
                 int number = Integer.parseInt(line);
                 if (number >= 0 && number <= max) {

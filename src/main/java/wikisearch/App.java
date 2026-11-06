@@ -1,5 +1,7 @@
 package wikisearch;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -9,11 +11,13 @@ import java.util.Scanner;
  */
 public class App {
 
-    private final ConsoleInput input = new ConsoleInput(new Scanner(System.in), System.out);
-    private final ResultPrinter printer = new ResultPrinter(System.out);
+    // Явно задаём UTF-8, чтобы кириллица не зависела от кодировки по умолчанию
+    private final PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+    private final ConsoleInput input = new ConsoleInput(new Scanner(System.in, StandardCharsets.UTF_8), out);
+    private final ResultPrinter printer = new ResultPrinter(out);
     private final WikipediaClient client = new WikipediaClient();
     private final SearchResponseParser parser = new SearchResponseParser();
-    private final ArticleOpener opener = new ArticleOpener(System.out);
+    private final ArticleOpener opener = new ArticleOpener(out);
 
     public void run() {
         while (true) {
@@ -45,7 +49,7 @@ public class App {
             }
             opener.open(results.get(choice.get() - 1));
         }
-        System.out.println();
-        System.out.println("До свидания!");
+        out.println();
+        out.println("До свидания!");
     }
 }
