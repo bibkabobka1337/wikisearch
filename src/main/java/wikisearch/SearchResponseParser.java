@@ -6,16 +6,10 @@ import com.google.gson.JsonParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Разбирает JSON-ответ Википедии с помощью Gson и превращает его в список {@link SearchResult}.
- */
 public class SearchResponseParser {
 
     private final Gson gson = new Gson();
 
-    /**
-     * @throws WikipediaApiException если ответ не является корректным JSON или содержит ошибку API
-     */
     public List<SearchResult> parse(String json) throws WikipediaApiException {
         ApiResponse response;
         try {
@@ -43,7 +37,6 @@ public class SearchResponseParser {
         return results;
     }
 
-    /** Убирает HTML-теги подсветки и основные HTML-сущности. */
     static String cleanSnippet(String html) {
         if (html == null) {
             return "";
@@ -57,9 +50,7 @@ public class SearchResponseParser {
                 .replace("&amp;", "&")
                 .trim();
     }
-
-    // --- классы, описывающие структуру JSON ---
-
+    
     private static class ApiResponse {
         ApiError error;
         QueryPart query;

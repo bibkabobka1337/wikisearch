@@ -3,9 +3,6 @@ package wikisearch;
 import java.io.PrintStream;
 import java.util.List;
 
-/**
- * Отвечает только за форматирование и вывод результатов поиска в консоль.
- */
 public class ResultPrinter {
 
     private final PrintStream out;

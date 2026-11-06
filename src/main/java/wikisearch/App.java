@@ -6,12 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-/**
- * Связывает компоненты программы и управляет основным циклом.
- */
 public class App {
-
-    // Явно задаём UTF-8, чтобы кириллица не зависела от кодировки по умолчанию
     private final PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     private final ConsoleInput input = new ConsoleInput(new Scanner(System.in, StandardCharsets.UTF_8), out);
     private final ResultPrinter printer = new ResultPrinter(out);

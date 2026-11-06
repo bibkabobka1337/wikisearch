@@ -9,9 +9,6 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-/**
- * Отправляет поисковые запросы к API Википедии и возвращает «сырой» JSON.
- */
 public class WikipediaClient {
 
     private static final String API_URL = "https://ru.wikipedia.org/w/api.php";
@@ -23,11 +20,6 @@ public class WikipediaClient {
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
 
-    /**
-     * @param query поисковый запрос пользователя (не URL-кодированный)
-     * @return тело ответа сервера в формате JSON
-     * @throws WikipediaApiException при сетевой ошибке или неуспешном HTTP-статусе
-     */
     public String search(String query) throws WikipediaApiException {
         HttpRequest request = HttpRequest.newBuilder(buildSearchUri(query))
                 .timeout(TIMEOUT)

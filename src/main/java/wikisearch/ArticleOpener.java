@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URI;
 
-/**
- * Открывает статью в браузере по умолчанию.
- * Если браузер недоступен (например, нет графической среды), выводит ссылку в консоль.
- */
 public class ArticleOpener {
 
     private final PrintStream out;
