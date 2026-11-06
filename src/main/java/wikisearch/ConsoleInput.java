@@ -35,4 +35,30 @@ public class ConsoleInput {
             out.println("Запрос не может быть пустым.");
         }
     }
+
+    /**
+     * Запрашивает номер статьи, пока пользователь не введёт корректное значение.
+     *
+     * @param max количество статей в списке
+     * @return номер статьи от 1 до {@code max}; {@code 0} - новый поиск;
+     *         {@link Optional#empty()}, если ввод закончился
+     */
+    public Optional<Integer> readChoice(int max) {
+        while (true) {
+            out.print("Введите номер статьи (1-" + max + ") или 0 для нового поиска: ");
+            if (!scanner.hasNextLine()) {
+                return Optional.empty();
+            }
+            String line = scanner.nextLine().trim();
+            try {
+                int number = Integer.parseInt(line);
+                if (number >= 0 && number <= max) {
+                    return Optional.of(number);
+                }
+            } catch (NumberFormatException ignored) {
+                // сообщение об ошибке выводится ниже
+            }
+            out.println("Некорректный выбор: введите целое число от 0 до " + max + ".");
+        }
+    }
 }
